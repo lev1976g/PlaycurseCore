@@ -1,3 +1,10 @@
+We are looking for Developers. Pls. see the projektpages.
+http://wowemu.de
+and live Server http://playcurse.de
+
+
+
+
 # ![logo](http://www.trinitycore.org/f/public/style_images/1_trinitycore.png) TrinityCore
 
 
