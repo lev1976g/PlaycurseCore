@@ -1,6 +1,6 @@
-We are looking for Developers. Pls. see the projektpages.
-http://wowemu.de
-and live Server http://playcurse.de
+
+
+
 
 
 
