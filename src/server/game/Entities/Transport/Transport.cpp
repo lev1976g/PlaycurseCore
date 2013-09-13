@@ -796,6 +796,26 @@ uint32 Transport::AddNPCPassenger(uint32 tguid, uint32 entry, float x, float y, 
 }
 
 // gunship data
+
+void Transport::UpdatePlayerPositions()
+{
+    for (PlayerSet::iterator itr = m_passengers.begin(); itr != m_passengers.end(); ++itr)
+    {
+        Player* plr = *itr;
+
+        float x, y, z, o;
+        o = GetOrientation() + plr->m_movementInfo.transport.pos.m_orientation;
+        x = GetPositionX() + (plr->m_movementInfo.transport.pos.m_positionX * cos(GetOrientation()) + plr->m_movementInfo.transport.pos.m_positionY * sin(GetOrientation() + M_PI));
+        y = GetPositionY() + (plr->m_movementInfo.transport.pos.m_positionY * cos(GetOrientation()) + plr->m_movementInfo.transport.pos.m_positionX * sin(GetOrientation()));
+        z = GetPositionZ() + plr->m_movementInfo.transport.pos.m_positionZ;
+        plr->Relocate(x, y, z, o);
+        UpdateData transData;
+        WorldPacket packet;
+        transData.BuildPacket(&packet);
+        plr->SendDirectMessage(&packet);
+    }
+}
+
 Creature* Transport::AddNPCPassengerInInstance(uint32 entry, float x, float y, float z, float o, uint32 anim)
 {
     Map* map = GetMap();
@@ -884,3 +904,6 @@ void Transport::CalculatePassengerOffset(float& x, float& y, float& z, float* o 
     y = (iny - inx * std::tan(GetOrientation())) / (std::cos(GetOrientation()) + std::sin(GetOrientation()) * std::tan(GetOrientation()));
     x = (inx + iny * std::tan(GetOrientation())) / (std::cos(GetOrientation()) + std::sin(GetOrientation()) * std::tan(GetOrientation()));
 }
+
+
+

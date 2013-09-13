@@ -2442,7 +2442,7 @@ class npc_gunship_portal : public CreatureScript
                 me->RemoveFromWorld();
             }
 
-            void UpdateAI( const uint32 diff)
+            void UpdateAI(uint32 diff)
             {
 
              events.Update(diff);
@@ -3153,7 +3153,7 @@ class spell_icc_remove_rocket_pack : public SpellScriptLoader
  
                 int32 itemId = GetEffectValue();
                 uint32 itemCount = hitPlr->GetItemCount(itemId, false); // Should be 1, but just in case.
-                hitPlr->DestroyItemCount(itemId, -itemCount, true, false);
+                hitPlr->DestroyItemCount(itemId, itemCount, true, false);
             }
  
             void Register()
