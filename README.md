@@ -1,6 +1,9 @@
 
 
+JOIN Playcurse.de
+JOIN wowemu.de
 
+your wow server experience
 
 
 
