@@ -1,15 +1,9 @@
 
 
-JOIN Playcurse.de
-
-JOIN wowemu.de
-
-your wow server experience
+JOIN Playcurse.de the live server. Your wow server experience
 
 3.3.5.a latest TrinityCore from 2013.09.02 and compatible with TDB 335.52 and updates to 2013_08_31_08.
 Updates are included.
-The core is in the aktual Live System stable.
-
 
 
 Spezials (dont forget to add the SQL´s):
