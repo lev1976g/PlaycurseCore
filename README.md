@@ -14,6 +14,13 @@ Spezials (dont forget to add the SQL´s):
 - MMAPS System included
 - Working Gunship Event
 
+
+NOTE: This core works fine with the armory of Shadez ( The core will not start without the armory SQL tables)
+
+https://github.com/Shadez/wowarmory
+
+
+
 Thx to
 TrinityCore - for the newest Core revision
 TDB - for an actual Database
