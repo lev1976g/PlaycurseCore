@@ -32,6 +32,8 @@ the authors of AH-BOT
 
 If hope you have FuN with this work.
 
+Join http://wowemu.de the new german WoW emulator experience 
+
 Bengel 
 
 
