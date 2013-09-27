@@ -22,11 +22,17 @@ https://github.com/Shadez/wowarmory
 
 
 Thx to
+
 TrinityCore - for the newest Core revision
+
 TDB - for an actual Database
+
 LilleCarl - for the Crossfaction Battlegrounds script
+
 Rochet2 - for the Transmogrification Script
+
 Baeumchen - for the Gunship script
+
 the authors of AH-BOT
 
 
