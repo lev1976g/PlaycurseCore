@@ -1801,11 +1801,10 @@ class npc_gunship_cannon : public CreatureScript
 
             void Reset()
             {
-				me->RemoveExtraUnitMovementFlag(MOVEMENTFLAG2_INTERPOLATED_TURNING);
                 me->SetReactState(REACT_PASSIVE);
                 me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
                 DoCast(me, SPELL_HEAT_DRAIN, true);
-				
+                TC_LOG_INFO("void Reset()");
             }
 
             void SpellHit(Unit* /*caster*/, SpellInfo const* spellEntry)
@@ -1834,6 +1833,10 @@ class npc_gunship_cannon : public CreatureScript
             	me->SetReactState(REACT_PASSIVE); //Überlegung 1: wenn nicht Reset, sondern Update zum Laden benutzt wird, sollte dies den fehler fixxen
                 me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
                 DoCast(me, SPELL_HEAT_DRAIN, true);
+                me->RemoveExtraUnitMovementFlag(MOVEMENTFLAG_STRAFE_LEFT);
+		me->RemoveExtraUnitMovementFlag(MOVEMENTFLAG_STRAFE_RIGHT);
+		me->RemoveExtraUnitMovementFlag(MOVEMENTFLAG2_INTERPOLATED_TURNING); //Überlegung 2: Wenn die else nur bei einem Tot aufgerufen wird, nicht bei einem Update?....
+                TC_LOG_INFO("void UpdateAI()");
                 
                 if(me->HasAura(SPELL_BELOW_ZERO))
                 {
@@ -1845,10 +1848,11 @@ class npc_gunship_cannon : public CreatureScript
                 }
                 else
                 {
-                    me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-					me->RemoveExtraUnitMovementFlag(MOVEMENTFLAG_STRAFE_LEFT);
-					me->RemoveExtraUnitMovementFlag(MOVEMENTFLAG_STRAFE_RIGHT);
-					me->RemoveExtraUnitMovementFlag(MOVEMENTFLAG2_INTERPOLATED_TURNING);
+                	TC_LOG_INFO("void UpdateAI() - else");
+			me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+			me->RemoveExtraUnitMovementFlag(MOVEMENTFLAG_STRAFE_LEFT);
+			me->RemoveExtraUnitMovementFlag(MOVEMENTFLAG_STRAFE_RIGHT);
+			me->RemoveExtraUnitMovementFlag(MOVEMENTFLAG2_INTERPOLATED_TURNING);
 					//me->AddExtraUnitMovementFlag(MOVEMENTFLAG2_NO_STRAFE);
 					//me->AddExtraUnitMovementFlag(MOVEMENTFLAG_LEFT);
 					//me->AddExtraUnitMovementFlag(MOVEMENTFLAG_RIGHT);
@@ -3323,37 +3327,37 @@ class spell_gb_burning_pitch : public SpellScriptLoader
 };
 
 /* spell 68645 Rocket Pack */
-//class spell_rocket_pack : public SpellScriptLoader
-//{
-//   public:
-//        spell_rocket_pack() : SpellScriptLoader("spell_rocket_pack") { }
-//
-//        class spell_rocket_pack_AuraScript : public AuraScript
-//        {
-//            PrepareAuraScript(spell_rocket_pack_AuraScript);
-//
-//            void OnApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
-//            {
-//                GetTarget()->CastSpell(GetTarget(), 68645, true);
-//            }
-//
-//            void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
-//            {
-//                GetTarget()->RemoveAurasDueToSpell(68645);
-//            }
-//
-//            void Register()
-//            {
-//                OnEffectApply += AuraEffectApplyFn(spell_rocket_pack_AuraScript::OnApply, EFFECT_1, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
-//                OnEffectRemove += AuraEffectRemoveFn(spell_rocket_pack_AuraScript::OnRemove, EFFECT_1, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
-//            }
-//        };
-//
-//        AuraScript* GetAuraScript() const
-//        {
-//            return new spell_rocket_pack_AuraScript();
-//        }
-//};
+class spell_rocket_pack : public SpellScriptLoader
+{
+    public:
+        spell_rocket_pack() : SpellScriptLoader("spell_rocket_pack") { }
+
+        class spell_rocket_pack_AuraScript : public AuraScript
+        {
+            PrepareAuraScript(spell_rocket_pack_AuraScript);
+
+            void OnApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+            {
+                GetTarget()->CastSpell(GetTarget(), 68721, true);
+            }
+
+            void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+            {
+                GetTarget()->RemoveAurasDueToSpell(68721);
+            }
+
+            void Register()
+            {
+                OnEffectApply += AuraEffectApplyFn(spell_rocket_pack_AuraScript::OnApply, EFFECT_1, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+                OnEffectRemove += AuraEffectRemoveFn(spell_rocket_pack_AuraScript::OnRemove, EFFECT_1, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            }
+        };
+
+        AuraScript* GetAuraScript() const
+        {
+            return new spell_rocket_pack_AuraScript();
+        }
+};
 
 
 void AddSC_boss_gunship_battle()
@@ -3383,5 +3387,5 @@ void AddSC_boss_gunship_battle()
     new spell_gb_overheat_drain();
     new spell_gb_incinerating_blast();
     new spell_gb_burning_pitch();
-//    new spell_rocket_pack();
+    new spell_rocket_pack();
 }
